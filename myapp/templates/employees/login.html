@@ -1,0 +1,40 @@
+{% load static %}
+<head>
+    <title>Login Page</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'employees/styles.css' %}">
+    <style>
+
+        .error-message {
+        background-color: #ffdddd;
+        color: #990000;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        border: 1px solid #990000;
+        }
+
+        .input-1{
+            margin-bottom: 20px;
+        }
+
+    </style>
+</head>
+
+<div class="container">
+    <h2>Login</h2>
+
+    {% if error_message %}
+        <div class="error-message">
+            {{ error_message }}
+        </div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="Username" class="input-1">
+        <input type="password" name="password" placeholder="Password">
+        <button type="submit">Login</button>
+    </form>
+
+    <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+</div>

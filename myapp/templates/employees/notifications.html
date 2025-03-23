@@ -1,0 +1,93 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .notifications-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .notifications-list li {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .notifications-list li:last-child {
+            border-bottom: none;
+        }
+
+        .notifications-list li.unread {
+            background-color: #f0f8ff; /* Light blue for unread */
+            font-weight: bold;
+        }
+
+        .notifications-list p {
+            margin: 0 0 5px 0;
+            line-height: 1.6;
+        }
+
+        .notifications-list small {
+            color: #888;
+            font-size: 0.85em;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        p {
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Your Notifications</h2>
+    {% if notifications %}
+        <ul class="notifications-list">
+            {% for notification in notifications %}
+            <li class="{% if not notification.is_read %}unread{% endif %}">
+                <p>{{ notification.message }}</p>
+                <small>{{ notification.created_at }}</small>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No notifications.</p>
+    {% endif %}
+
+    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+
+</body>
+</html>

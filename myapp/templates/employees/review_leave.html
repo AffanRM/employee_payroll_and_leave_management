@@ -1,0 +1,116 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Leave Request</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        p {
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        strong {
+            font-weight: bold;
+        }
+
+        form {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        form button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0 10px;
+            font-size: 1rem;
+        }
+
+        form button[name="action"][value="approve"] {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        form button[name="action"][value="approve"]:hover {
+            background-color: #45a049;
+        }
+
+        form button[name="action"][value="reject"] {
+            background-color: #f44336;
+            color: white;
+        }
+
+        form button[name="action"][value="reject"]:hover {
+            background-color: #d32f2f;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .container{
+            position: absolute; 
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Centers the div */
+            padding: 3%;
+            border: 1px solid gray;
+            border-radius: 20px;
+        }
+
+        .container p{
+            font-size: 1.1rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <h2>Review Leave Request</h2>
+
+        <p><strong>Employee:</strong> {{ leave.employee.username }}</p>
+        <p><strong>Leave Type:</strong> {{ leave.get_leave_type_display }}</p>
+        <p><strong>Start Date:</strong> {{ leave.start_date }}</p>
+        <p><strong>End Date:</strong> {{ leave.end_date }}</p>
+        <p><strong>Duration:</strong> {{ leave.get_duration }} days</p>
+        <p><strong>Reason:</strong> {{ leave.reason }}</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" name="action" value="approve">Approve</button>
+            <button type="submit" name="action" value="reject">Reject</button>
+        </form>
+
+        <a href="{% url 'manager_dashboard' %}">Back to Dashboard</a>
+
+    </div>
+    
+
+</body>
+</html>

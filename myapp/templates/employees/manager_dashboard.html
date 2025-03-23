@@ -1,0 +1,130 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Dashboard</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h2, h3 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        p {
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        a {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+
+        .management-links {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .management-links a {
+            display: inline-block;
+            margin: 5px;
+        }
+
+        .no-requests-container{
+            text-align: center;
+        }
+        .logout-container{
+            position: absolute;
+            right: 15px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="logout-container">
+        <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+    </div>
+
+    <h2>Manager Dashboard</h2>
+
+    <h3>Pending Leave Requests</h3>
+    {% if pending_requests %}
+        <table>
+            <tr>
+                <th>Employee</th>
+                <th>Leave Type</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Duration</th>
+                <th>Reason</th>
+                <th>Action</th>
+            </tr>
+            {% for leave in pending_requests %}
+            <tr>
+                <td>{{ leave.employee.username }}</td>
+                <td>{{ leave.get_leave_type_display }}</td>
+                <td>{{ leave.start_date }}</td>
+                <td>{{ leave.end_date }}</td>
+                <td>{{ leave.get_duration }} days</td>
+                <td>{{ leave.reason }}</td>
+                <td><a href="{% url 'review_leave' leave.id %}">Review</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <div class="no-requests-container">
+            <p>No pending leave requests.</p>
+        </div>
+    {% endif %}
+
+    <div class="management-links">
+        <h3>Management Links</h3>
+        <a href="{% url 'employee_list' %}">Manage Employees</a>
+    </div>
+
+
+</body>
+</html>
